@@ -2,7 +2,7 @@ const { createBoard, findCell } = require('../createBoard');
 
 const board = createBoard();
 
-describe('createBattleship()', () => {
+describe.only('createBattleship()', () => {
   it('should create a 10x10 grid with no input', () => {
     const start = [{ x: 1, y: 1, ship: null, missed: null }];
     const end = [{ x: 10, y: 10, ship: null, missed: null }];
@@ -29,6 +29,30 @@ describe('createBattleship()', () => {
     expect(cell.ship).not.toBeNull();
     expect(cell2.ship).not.toBeNull();
     expect(cell3.ship).toBeNull();
+  });
+
+  it('should not place a ship out of bounds when placed on edge 10,10', () => {
+    board.placeShip(10, 9, 3, 'Y');
+    const cell = findCell(10, 8, board.grid);
+    const cell1 = findCell(10, 9, board.grid);
+    const cell2 = findCell(10, 10, board.grid);
+    const cell3 = findCell(10, 11, board.grid);
+    expect(cell.ship).not.toBeNull();
+    expect(cell1.ship).not.toBeNull();
+    expect(cell2.ship).not.toBeNull();
+    expect(cell3).toBe(undefined);
+  });
+
+  it('should not place a ship out of bounds when placed on edge 10,10', () => {
+    board.placeShip(10, 10, 3, 'X');
+    const cell = findCell(8, 10, board.grid);
+    const cell1 = findCell(9, 10, board.grid);
+    const cell2 = findCell(10, 10, board.grid);
+    const cell3 = findCell(11, 10, board.grid);
+    expect(cell.ship).not.toBeNull();
+    expect(cell1.ship).not.toBeNull();
+    expect(cell2.ship).not.toBeNull();
+    expect(cell3).toBe(undefined);
   });
 
   it('should return a string with out of bounds placement of ships', () => {

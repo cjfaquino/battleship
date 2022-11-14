@@ -10,10 +10,10 @@ const createCell = (x, y) => ({
 const findCell = (x, y, arr) =>
   arr.find((cell) => cell.x === x && cell.y === y);
 
-const createBoard = (n = 10) => {
+const createBoard = (size = 10) => {
   const grid = [];
-  for (let i = 1; i <= n; i++) {
-    for (let j = 1; j <= n; j++) {
+  for (let i = 1; i <= size; i++) {
+    for (let j = 1; j <= size; j++) {
       grid.push(createCell(i, j));
     }
   }
@@ -26,9 +26,17 @@ const createBoard = (n = 10) => {
     for (let i = 0; i < length; i++) {
       let cell;
       if (axis === 'Y') {
-        cell = findCell(x, y + i, grid);
+        let newY = y + i;
+        if (newY > size) {
+          newY -= length;
+        }
+        cell = findCell(x, newY, grid);
       } else if (axis === 'X') {
-        cell = findCell(x + i, y, grid);
+        let newX = x + i;
+        if (newX > size) {
+          newX -= length;
+        }
+        cell = findCell(newX, y, grid);
       }
 
       cell.ship = ship;
