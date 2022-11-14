@@ -46,9 +46,11 @@ const createBoard = (size = 10) => {
   };
 
   const receiveAttack = (x, y) => {
-    if (!findCell(x, y, grid)) return 'Out of bounds';
-
     const cell = findCell(x, y, grid);
+    if (!cell) return 'Out of bounds';
+
+    if (cell.missed !== null) return "Can't attack same cell";
+
     if (!cell.ship) {
       cell.missed = true;
       return cell;

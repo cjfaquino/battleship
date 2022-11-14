@@ -64,10 +64,18 @@ describe.only('createBattleship()', () => {
 
   test('a cell with a ship (1,1) should take damage from receiveAttack at (1,1)', () => {
     const { ship } = findCell(1, 1, board.grid);
-    ship.hit();
-
-    expect(board.receiveAttack(1, 1).ship).toStrictEqual(ship);
     expect(board.receiveAttack(1, 1).missed).toBe(false);
+    expect(ship.isSunk()).toBe(false);
+  });
+
+  it('cannot attack the same space', () => {
+    const { ship } = findCell(1, 1, board.grid);
+    expect(board.receiveAttack(1, 1)).toBe("Can't attack same cell");
+    expect(ship.isSunk()).toBe(false);
+  });
+
+  test('ship at 1,1, 1,2 increases damage if attacked next space', () => {
+    expect(board.receiveAttack(1, 2).ship.isSunk()).toBe(true);
   });
 
   it('should record a missed attack', () => {
