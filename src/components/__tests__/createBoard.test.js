@@ -79,8 +79,8 @@ describe.only('createBattleship()', () => {
   });
 
   it('should record a missed attack', () => {
-    board.receiveAttack(3, 3);
-    const cell = findCell(3, 3, board.grid);
+    board.receiveAttack(4, 4);
+    const cell = findCell(4, 4, board.grid);
 
     expect(cell.missed).toBe(true);
   });
@@ -88,5 +88,26 @@ describe.only('createBattleship()', () => {
   it('should not allow out of bounds attacks', () => {
     expect(board.receiveAttack(11, 1)).toBe('Out of bounds');
     expect(board.receiveAttack(1, 11)).toBe('Out of bounds');
+  });
+
+  it('should report false if board still has ships in play', () => {
+    expect(board.allShipsSunk()).toBe(false);
+  });
+
+  it('should report if board loses all ships', () => {
+    board.placeShip(3, 3, 1, 'Y');
+    board.receiveAttack(3, 3);
+
+    board.placeShip(7, 7, 1, 'Y');
+    board.receiveAttack(7, 7);
+
+    board.receiveAttack(5, 5);
+    board.receiveAttack(6, 5);
+
+    board.receiveAttack(8, 10);
+    board.receiveAttack(9, 10);
+    board.receiveAttack(10, 10);
+
+    expect(board.allShipsSunk()).toBe(true);
   });
 });

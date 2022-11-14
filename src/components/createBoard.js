@@ -62,7 +62,19 @@ const createBoard = (size = 10) => {
     return cell;
   };
 
-  return { grid, placeShip, receiveAttack };
+  const allShipsSunk = () => {
+    const sunkenShips = grid
+      .filter((cell) => cell.ship) // cells with ships
+      .filter((cell) => cell.ship.isSunk()) // cells with sunken ships
+      .map((cell) => cell.ship); // grab ships
+
+    // removes same ships cells
+    const uniqueSunken = [...new Set(sunkenShips)];
+
+    return uniqueSunken.length >= 5;
+  };
+
+  return { grid, placeShip, receiveAttack, allShipsSunk };
 };
 
 module.exports = { createBoard, findCell };
