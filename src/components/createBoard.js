@@ -10,6 +10,20 @@ const createCell = (x, y) => ({
 const findCell = (x, y, arr) =>
   arr.find((cell) => cell.x === x && cell.y === y);
 
+const isValidMove = (x, y, board) => {
+  const size = board.getSize();
+  // within game board
+  if (x > size || x < 1 || y > size || y < 1) {
+    return false;
+  }
+
+  // cell has not been attacked
+  const cell = findCell(x, y, board.grid);
+  if (cell.missed !== null) return false;
+
+  return true;
+};
+
 const checkForShips = (x, y, length, axis, size, grid) => {
   for (let i = 0; i < length; i++) {
     let cell;
@@ -39,6 +53,8 @@ const createBoard = (size = 10) => {
       grid.push(createCell(i, j));
     }
   }
+
+  const getSize = () => size;
 
   const placeShip = (x, y, length, axis) => {
     if (!findCell(x, y, grid)) return 'Out of bounds';
@@ -103,7 +119,7 @@ const createBoard = (size = 10) => {
     return uniqueSunken.length >= 5;
   };
 
-  return { grid, placeShip, receiveAttack, getMissed, allShipsSunk };
+  return { grid, getSize, placeShip, receiveAttack, getMissed, allShipsSunk };
 };
 
-module.exports = { createBoard, findCell };
+module.exports = { createBoard, findCell, isValidMove };
