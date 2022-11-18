@@ -10,6 +10,28 @@ const createCell = (x, y) => ({
 const findCell = (x, y, arr) =>
   arr.find((cell) => cell.x === x && cell.y === y);
 
+const checkForShips = (x, y, length, axis, size, grid) => {
+  for (let i = 0; i < length; i++) {
+    let cell;
+    if (axis === 'Y') {
+      let newY = y + i;
+      if (newY > size) {
+        newY -= length;
+      }
+      cell = findCell(x, newY, grid);
+    } else if (axis === 'X') {
+      let newX = x + i;
+      if (newX > size) {
+        newX -= length;
+      }
+      cell = findCell(newX, y, grid);
+    }
+    if (cell.ship !== null) return true;
+  }
+
+  return false;
+};
+
 const createBoard = (size = 10) => {
   const grid = [];
   for (let i = 1; i <= size; i++) {
@@ -20,6 +42,8 @@ const createBoard = (size = 10) => {
 
   const placeShip = (x, y, length, axis) => {
     if (!findCell(x, y, grid)) return 'Out of bounds';
+    if (checkForShips(x, y, length, axis, size, grid))
+      return "Can't place onto another ship";
 
     const ship = createShip(length);
 

@@ -44,15 +44,24 @@ describe.only('createBattleship()', () => {
   });
 
   it('should not place a ship out of bounds when placed on edge 10,10', () => {
-    board.placeShip(10, 10, 3, 'X');
-    const cell = findCell(8, 10, board.grid);
-    const cell1 = findCell(9, 10, board.grid);
-    const cell2 = findCell(10, 10, board.grid);
-    const cell3 = findCell(11, 10, board.grid);
+    board.placeShip(10, 7, 3, 'X');
+    const cell = findCell(8, 7, board.grid);
+    const cell1 = findCell(9, 7, board.grid);
+    const cell2 = findCell(10, 7, board.grid);
+    const cell3 = findCell(11, 7, board.grid);
     expect(cell.ship).not.toBeNull();
     expect(cell1.ship).not.toBeNull();
     expect(cell2.ship).not.toBeNull();
     expect(cell3).toBe(undefined);
+  });
+
+  it('should not place on top of another ship', () => {
+    const ship45 = findCell(4, 5, board.grid).ship;
+    const ship55 = findCell(5, 5, board.grid).ship;
+    const ship65 = findCell(6, 5, board.grid).ship;
+    expect(board.placeShip(4, 5, 2, 'X')).toBe("Can't place onto another ship");
+    expect(ship45).toBe(null);
+    expect(ship55).toStrictEqual(ship65);
   });
 
   it('should return a string with out of bounds placement of ships', () => {
@@ -98,14 +107,15 @@ describe.only('createBattleship()', () => {
     board.placeShip(3, 3, 1, 'Y');
     board.receiveAttack(3, 3);
 
-    board.placeShip(7, 7, 1, 'Y');
-    board.receiveAttack(7, 7);
+    board.receiveAttack(10, 7);
+    board.receiveAttack(9, 7);
+    board.receiveAttack(8, 7);
 
     board.receiveAttack(5, 5);
     board.receiveAttack(6, 5);
 
-    board.receiveAttack(8, 10);
-    board.receiveAttack(9, 10);
+    board.receiveAttack(10, 8);
+    board.receiveAttack(10, 9);
     board.receiveAttack(10, 10);
 
     expect(board.allShipsSunk()).toBe(true);
