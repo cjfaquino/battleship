@@ -86,6 +86,11 @@ const createBoard = (size = 10) => {
     return cell;
   };
 
+  const getMissed = () => {
+    const missed = grid.filter((cell) => cell.missed === true);
+    return missed;
+  };
+
   const allShipsSunk = () => {
     const sunkenShips = grid
       .filter((cell) => cell.ship) // cells with ships
@@ -98,7 +103,7 @@ const createBoard = (size = 10) => {
     return uniqueSunken.length >= 5;
   };
 
-  return { grid, placeShip, receiveAttack, allShipsSunk };
+  return { grid, placeShip, receiveAttack, getMissed, allShipsSunk };
 };
 
 module.exports = { createBoard, findCell };
