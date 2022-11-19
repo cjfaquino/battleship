@@ -7,9 +7,12 @@ const renderEnemyBoard = require('./renderEnemyBoard');
 const { attackCpu, attackPlayer } = require('./attackDOM');
 
 const game = (size = 10) => {
-  const { player: playerDOM, cpu: cpuDOM } = createBoardDOM(size);
+  const { board: playerDOM } = createBoardDOM(size, 'player');
+  const { board: cpuDOM } = createBoardDOM(size, 'cpu');
   const playerBoard = createBoard(size);
   const cpuBoard = createBoard(size);
+
+  cpuDOM.classList.add('current-turn');
 
   const player = Player('p1', playerBoard);
   const cpu = CPU(cpuBoard);
