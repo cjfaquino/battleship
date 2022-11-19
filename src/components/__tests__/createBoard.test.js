@@ -99,13 +99,15 @@ describe.only('createBattleship()', () => {
     expect(board.receiveAttack(1, 11)).toBe('Out of bounds');
   });
 
-  it('should output all missed attacks', () => {
+  it('should output all spaces not attacked', () => {
     board.receiveAttack(4, 5);
     const expected = [
       { missed: true, ship: null, x: 4, y: 4 },
       { missed: true, ship: null, x: 4, y: 5 },
     ];
-    expect(board.getMissed()).toStrictEqual(expect.arrayContaining(expected));
+    expect(board.getAttackable()).not.toStrictEqual(
+      expect.arrayContaining(expected)
+    );
   });
 
   it('should report false if board still has ships in play', () => {
