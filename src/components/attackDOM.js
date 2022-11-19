@@ -1,8 +1,9 @@
 const checkOver = require('./checkOver');
+const { isValidMove } = require('./createBoard');
 const renderBoard = require('./renderBoard');
 const renderEnemyBoard = require('./renderEnemyBoard');
 
-const attackPlayer = (player, cpu) => () => {
+const attackPlayer = (player, cpu) => {
   setTimeout(() => {
     cpu.sendAttack(player);
     renderBoard('player', player.board);
@@ -11,7 +12,7 @@ const attackPlayer = (player, cpu) => () => {
     if (!checkOver(player, cpu)) {
       document.dispatchEvent(event);
     }
-  }, 500);
+  }, 1000);
 };
 
 const attackCpu = (player, cpu) => (e) => {
@@ -20,14 +21,18 @@ const attackCpu = (player, cpu) => (e) => {
   const nX = Number(x);
   const nY = Number(y);
 
-  if (player.getTurn() && !player.board.allShipsSunk()) {
+  if (
+    player.getTurn() &&
+    !player.board.allShipsSunk() &&
+    isValidMove(nX, nY, cpu.board)
+  ) {
     player.sendAttack(nX, nY, cpu);
     renderEnemyBoard(cpu.board);
-  }
 
-  const event = new Event('cpuTurn');
-  if (!checkOver(player, cpu)) {
-    document.dispatchEvent(event);
+    const event = new Event('cpuTurn');
+    if (!checkOver(player, cpu)) {
+      document.dispatchEvent(event);
+    }
   }
 };
 
