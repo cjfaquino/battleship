@@ -9,6 +9,13 @@
   font-family: sans-serif;
 }
 
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 100px;
+}
+
 #player,
 #cpu {
   display: grid;
@@ -16,16 +23,32 @@
   width: fit-content;
   grid-template-columns: repeat(10, var(--cell));
   grid-template-rows: repeat(10, var(--cell));
+  background-color: rgb(185, 229, 255);
 }
 
-#player {
-  background-color: blue;
-}
-
-#cpu {
-  background-color: red;
+.current-turn {
+  outline: 5px solid rgb(0, 0, 0) !important;
+  transition: outline 100ms ease-in-out;
 }
 
 .cell {
   outline: 1px solid black;
+}
+
+.cell.ship {
+  background-color: grey;
+}
+
+.cell.missed {
+  background-color: red;
+  border-radius: 50%;
+}
+
+.cell.hit {
+  background-color: black;
+}
+
+.hit,
+.missed {
+  transition: all 200ms ease-in-out;
 }
