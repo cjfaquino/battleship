@@ -13,5 +13,7 @@ const createBoardDOM = (size) => {
     cell.classList.add('cell');
     cpu.append(cell);
   }
+
+  return { player, cpu };
 };
 module.exports = createBoardDOM;

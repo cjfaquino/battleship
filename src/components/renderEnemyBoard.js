@@ -1,13 +1,10 @@
-const renderBoard = (player, board) => {
-  const boardDOM = document.querySelectorAll(`#${player} .cell`);
+const renderEnemyBoard = (board) => {
+  const boardDOM = document.querySelectorAll(`#cpu .cell`);
   const { grid } = board;
 
   for (let i = 0; i < boardDOM.length; i++) {
     const cellDOM = boardDOM[i];
     const cell = grid[i];
-
-    // ship color
-    if (cell.ship) cellDOM.classList.add('ship');
 
     // missed attack color
     if (cell.missed === true) cellDOM.classList.add('missed');
@@ -19,4 +16,5 @@ const renderBoard = (player, board) => {
     cellDOM.dataset.y = cell.y;
   }
 };
-module.exports = renderBoard;
+
+module.exports = renderEnemyBoard;

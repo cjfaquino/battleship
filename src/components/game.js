@@ -3,10 +3,11 @@ const Player = require('./Player');
 const CPU = require('./CPU');
 const renderBoard = require('./renderBoard');
 const createBoardDOM = require('./createBoardDOM');
+const renderEnemyBoard = require('./renderEnemyBoard');
+const { attackCpu } = require('./attackDOM');
 
 const game = (size = 10) => {
-  createBoardDOM(size);
-
+  const { cpu: cpuDOM } = createBoardDOM(size);
   const playerBoard = createBoard(size);
   const cpuBoard = createBoard(size);
 
@@ -26,9 +27,13 @@ const game = (size = 10) => {
   cpuBoard.placeShip(1, 9, 2, 'X');
 
   renderBoard('player', playerBoard);
-  renderBoard('cpu', cpuBoard);
+  renderEnemyBoard(cpuBoard);
+
+  cpuDOM.childNodes.forEach((cell) => {
+    cell.addEventListener('click', attackCpu(player, cpu));
+  });
 
   return { player, cpu, playerBoard, cpuBoard };
 };
 
-module.exports = game;
+module.exports = { game };
