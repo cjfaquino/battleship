@@ -4,7 +4,7 @@ const CPU = require('./CPU');
 const renderBoard = require('./renderBoard');
 const createBoardDOM = require('./createBoardDOM');
 const renderEnemyBoard = require('./renderEnemyBoard');
-const { attackCpu } = require('./attackDOM');
+const { attackCpu, attackPlayer } = require('./attackDOM');
 
 const game = (size = 10) => {
   const { cpu: cpuDOM } = createBoardDOM(size);
@@ -26,6 +26,14 @@ const game = (size = 10) => {
   cpuBoard.placeShip(1, 7, 3, 'X');
   cpuBoard.placeShip(1, 9, 2, 'X');
 
+  // test
+  // for (let i = 0; i < 200; i++) {
+  //   const randX = Math.floor(Math.random() * 10 + 1);
+  //   const randY = Math.floor(Math.random() * 10 + 1);
+  //   player.sendAttack(randX, randY, cpu);
+  //   cpu.sendAttack(player);
+  // }
+
   renderBoard('player', playerBoard);
   renderEnemyBoard(cpuBoard);
 
@@ -33,6 +41,17 @@ const game = (size = 10) => {
     cell.addEventListener('click', attackCpu(player, cpu));
   });
 
+  document.addEventListener('cpuTurn', attackPlayer(player, cpu));
+  document.addEventListener('playerTurn', () => {
+    console.log('player turn');
+  });
+
+  document.addEventListener('gameOver', () => {
+    cpuDOM.childNodes.forEach((cell) => {
+      cell.removeEventListener('click', attackCpu(player, cpu));
+    });
+    console.log('game over');
+  });
   return { player, cpu, playerBoard, cpuBoard };
 };
 
