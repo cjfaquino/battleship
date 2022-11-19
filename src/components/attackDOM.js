@@ -16,7 +16,7 @@ const attackPlayer = (player, cpu) => {
 };
 
 const attackCpu = (player, cpu) => (e) => {
-  const cell = e.currentTarget;
+  const cell = e.target;
   const { x, y } = cell.dataset;
   const nX = Number(x);
   const nY = Number(y);

@@ -42,8 +42,14 @@ const game = (size = 10) => {
   renderBoard('player', playerBoard);
   renderEnemyBoard(cpuBoard);
 
-  cpuDOM.childNodes.forEach((cell) => {
-    cell.addEventListener('click', attackCpu(player, cpu));
+  // cpuDOM.childNodes.forEach((cell) => {
+  //   cell.addEventListener('click', attackCpu(player, cpu));
+  // });
+
+  cpuDOM.addEventListener('click', attackCpu(player, cpu));
+
+  document.addEventListener('finished placing', () => {
+    console.log('finished placing');
   });
 
   document.addEventListener('cpuTurn', () => {
