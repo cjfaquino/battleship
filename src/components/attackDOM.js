@@ -1,5 +1,5 @@
-const checkOver = require('./checkOver');
-const { isValidMove } = require('./createBoard');
+const checkOver = require('./utils/checkOver');
+const isValidMove = require('./utils/isValidMove');
 const renderBoard = require('./renderBoard');
 const renderEnemyBoard = require('./renderEnemyBoard');
 

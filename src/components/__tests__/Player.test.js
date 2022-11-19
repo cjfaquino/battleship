@@ -1,6 +1,6 @@
-const Player = require('../Player');
-const { createBoard } = require('../createBoard');
-const CPU = require('../CPU');
+const Player = require('../factories/Player');
+const createBoard = require('../factories/createBoard');
+const CPU = require('../factories/CPU');
 
 const playerBoard = createBoard();
 const enemyBoard = createBoard();

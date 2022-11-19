@@ -1,4 +1,5 @@
-const { createBoard, findCell } = require('../createBoard');
+const createBoard = require('../factories/createBoard');
+const findCell = require('../utils/findCell');
 
 const board = createBoard();
 

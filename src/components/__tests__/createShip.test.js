@@ -1,4 +1,4 @@
-const createShip = require('../createShip');
+const createShip = require('../factories/createShip');
 
 describe('Ship factory', () => {
   const ship = createShip(3);

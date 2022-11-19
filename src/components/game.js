@@ -1,6 +1,6 @@
-const { createBoard } = require('./createBoard');
-const Player = require('./Player');
-const CPU = require('./CPU');
+const createBoard = require('./factories/createBoard');
+const Player = require('./factories/Player');
+const CPU = require('./factories/CPU');
 const renderBoard = require('./renderBoard');
 const createBoardDOM = require('./createBoardDOM');
 const renderEnemyBoard = require('./renderEnemyBoard');
@@ -52,7 +52,6 @@ const game = (size = 10) => {
   document.addEventListener('playerTurn', () => {
     playerDOM.classList.remove('current-turn');
     cpuDOM.classList.add('current-turn');
-    console.log('test');
   });
 
   document.addEventListener('gameOver', () => {

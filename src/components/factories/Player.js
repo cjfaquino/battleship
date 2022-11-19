@@ -1,4 +1,4 @@
-const { isValidMove } = require('./createBoard');
+const isValidMove = require('../utils/isValidMove');
 
 const Player = (player, playerBoard) => {
   let turn;
