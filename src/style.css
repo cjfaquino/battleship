@@ -9,18 +9,33 @@
   font-family: sans-serif;
 }
 
+.hide {
+  display: none !important;
+}
+
+body {
+  padding: 10px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+}
+
 main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 100px;
+  padding-bottom: 20px;
 }
 
 #player,
-#cpu {
+#cpu,
+#place-ships {
   display: grid;
   grid-auto-flow: column;
   width: fit-content;
+  height: fit-content;
   grid-template-columns: repeat(10, var(--cell));
   grid-template-rows: repeat(10, var(--cell));
   background-color: rgb(185, 229, 255);
