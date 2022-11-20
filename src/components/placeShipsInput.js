@@ -10,6 +10,7 @@ const placeShipsInput = (board) => {
   const resetBtn = document.querySelector('.reset-placement');
   const confirmBtn = document.querySelector('.confirm-placement');
   rotateBtn.dataset.axis = 'X';
+  confirmBtn.disabled = true;
 
   const shipSize = [5, 4, 3, 3, 2];
   let currentShip = 0;
@@ -49,6 +50,10 @@ const placeShipsInput = (board) => {
       board.placeShip(nX, nY, shipSize[currentShip], axis);
       currentShip += 1;
       renderBoard('place-ships', board);
+    }
+
+    if (currentShip >= shipSize.length) {
+      confirmBtn.disabled = false;
     }
 
     return board;

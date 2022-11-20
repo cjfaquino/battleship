@@ -10,51 +10,49 @@ const { placeShipsInput, placeCpuShips } = require('./placeShipsInput');
 const game = (size = 10) => {
   // input ships
   createBoardDOM(size, 'place-ships');
-  const inputBoard = createBoard(size);
+
+  // create board DOMs
+  const { board: playerDOM } = createBoardDOM(size, 'player');
+  const { board: cpuDOM } = createBoardDOM(size, 'cpu');
 
   // initialize player
-  const { board: playerDOM } = createBoardDOM(size, 'player');
   const playerBoard = createBoard(size);
   const player = Player('p1', playerBoard);
   playerDOM.classList.add('hide');
 
   // initialize cpu
-  const { board: cpuDOM } = createBoardDOM(size, 'cpu');
   const cpuBoard = createBoard(size);
   const cpu = CPU(cpuBoard);
   cpuDOM.classList.add('hide');
   placeCpuShips(cpuBoard);
 
-  renderBoard('place-ships', inputBoard);
-  placeShipsInput(inputBoard);
-
-  // playerBoard.placeShip(1, 1, 5, 'Y');
-  // playerBoard.placeShip(3, 1, 4, 'Y');
-  // playerBoard.placeShip(5, 1, 3, 'Y');
-  // playerBoard.placeShip(7, 1, 3, 'Y');
-  // playerBoard.placeShip(9, 1, 2, 'Y');
-
-  // test
-  // for (let i = 0; i < 90; i++) {
-  //   const attackable = cpuBoard.getAttackable();
-  //   const randomIndex = Math.floor(Math.random() * attackable.length);
-  //   const randomCell = attackable[randomIndex];
-  //   const { x, y } = randomCell;
-  //   player.sendAttack(x, y, cpu);
-  //   cpu.sendAttack(player);
-  // }
-
-  renderBoard('player', playerBoard);
-  renderEnemyBoard(cpuBoard);
-
-  // cpuDOM.childNodes.forEach((cell) => {
-  //   cell.addEventListener('click', attackCpu(player, cpu));
-  // });
+  renderBoard('place-ships', playerBoard);
+  placeShipsInput(playerBoard);
 
   cpuDOM.addEventListener('click', attackCpu(player, cpu));
 
   document.addEventListener('finished placing', () => {
-    console.log('finished placing');
+    const menu = document.getElementById('input-menu');
+    renderBoard('player', playerBoard);
+    renderEnemyBoard(cpuBoard);
+
+    menu.classList.add('hide');
+    playerDOM.classList.remove('hide');
+    cpuDOM.classList.remove('hide');
+
+    // test
+    // for (let i = 0; i < 90; i++) {
+    //   const attackable = cpuBoard.getAttackable();
+    //   const randomIndex = Math.floor(Math.random() * attackable.length);
+    //   const randomCell = attackable[randomIndex];
+    //   const { x, y } = randomCell;
+    //   player.sendAttack(x, y, cpu);
+    //   cpu.sendAttack(player);
+    // }
+    // renderBoard('player', playerBoard);
+    // renderEnemyBoard(cpuBoard);
+
+    document.dispatchEvent(new Event('playerTurn'));
   });
 
   document.addEventListener('cpuTurn', () => {
