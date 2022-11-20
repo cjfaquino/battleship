@@ -5,7 +5,7 @@ const renderBoard = require('./renderBoard');
 const createBoardDOM = require('./createBoardDOM');
 const renderEnemyBoard = require('./renderEnemyBoard');
 const { attackCpu, attackPlayer } = require('./attackDOM');
-const { placeShipsInput, placeCpuShips } = require('./placeShipsDOM');
+const { placeShipsInput, placeCpuShips } = require('./placeShipsInput');
 
 const game = (size = 10) => {
   // input ships
@@ -23,11 +23,10 @@ const game = (size = 10) => {
   const cpuBoard = createBoard(size);
   const cpu = CPU(cpuBoard);
   cpuDOM.classList.add('hide');
+  placeCpuShips(cpuBoard);
 
   renderBoard('place-ships', inputBoard);
   placeShipsInput(inputBoard);
-
-  placeCpuShips(cpuBoard);
 
   // playerBoard.placeShip(1, 1, 5, 'Y');
   // playerBoard.placeShip(3, 1, 4, 'Y');
