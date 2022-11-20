@@ -1,8 +1,9 @@
 const renderBoard = require('./renderBoard');
 const checkForShips = require('./utils/checkForShips');
 
-const placeShips = (boardDOM, board) => {
-  const shipLengths = [5, 4, 3, 3, 2];
+const placeShipsInput = (board) => {
+  const boardDOM = document.getElementById('place-ships');
+  const shipSize = [5, 4, 3, 3, 2];
   let currentShip = 0;
   boardDOM.addEventListener('click', (e) => {
     const cell = e.target;
@@ -11,21 +12,21 @@ const placeShips = (boardDOM, board) => {
     const nY = Number(y);
 
     if (
-      currentShip < shipLengths.length &&
+      currentShip < shipSize.length &&
       !checkForShips(
         nX,
         nY,
-        shipLengths[currentShip],
+        shipSize[currentShip],
         'X',
         board.getSize(),
         board.grid
       )
     ) {
-      board.placeShip(nX, nY, shipLengths[currentShip], 'X');
+      board.placeShip(nX, nY, shipSize[currentShip], 'X');
       currentShip += 1;
       renderBoard('place-ships', board);
 
-      if (currentShip >= shipLengths.length) {
+      if (currentShip >= shipSize.length) {
         const event = new Event('finished placing');
         document.dispatchEvent(event);
       }
@@ -35,4 +36,4 @@ const placeShips = (boardDOM, board) => {
   });
 };
 
-module.exports = placeShips;
+module.exports = placeShipsInput;

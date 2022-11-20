@@ -5,24 +5,27 @@ const renderBoard = require('./renderBoard');
 const createBoardDOM = require('./createBoardDOM');
 const renderEnemyBoard = require('./renderEnemyBoard');
 const { attackCpu, attackPlayer } = require('./attackDOM');
-const placeShips = require('./placeShipsDOM');
+const placeShipsInput = require('./placeShipsDOM');
 
 const game = (size = 10) => {
-  const { board: placeShipsDOM } = createBoardDOM(size, 'place-ships');
-  const { board: playerDOM } = createBoardDOM(size, 'player');
-  const { board: cpuDOM } = createBoardDOM(size, 'cpu');
+  // input ships
+  createBoardDOM(size, 'place-ships');
   const inputBoard = createBoard(size);
-  const playerBoard = createBoard(size);
-  const cpuBoard = createBoard(size);
 
-  cpuDOM.classList.add('hide');
+  // initialize player
+  const { board: playerDOM } = createBoardDOM(size, 'player');
+  const playerBoard = createBoard(size);
+  const player = Player('p1', playerBoard);
   playerDOM.classList.add('hide');
 
-  renderBoard('place-ships', inputBoard);
-  placeShips(placeShipsDOM, inputBoard);
-
-  const player = Player('p1', playerBoard);
+  // initialize cpu
+  const { board: cpuDOM } = createBoardDOM(size, 'cpu');
+  const cpuBoard = createBoard(size);
   const cpu = CPU(cpuBoard);
+  cpuDOM.classList.add('hide');
+
+  renderBoard('place-ships', inputBoard);
+  placeShipsInput(inputBoard);
 
   // playerBoard.placeShip(1, 1, 5, 'Y');
   // playerBoard.placeShip(3, 1, 4, 'Y');
