@@ -93,6 +93,15 @@ button {
   outline: 1px solid black;
 }
 
+.cell.highlight {
+  background-color: white;
+}
+
+.cell.highlight.ship {
+  background-color: red;
+  outline: 1px solid red;
+}
+
 .cell.ship {
   background-color: grey;
 }
