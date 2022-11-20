@@ -1,12 +1,20 @@
 const renderBoard = require('./renderBoard');
+const { rotateAxis, getAxis } = require('./utils/rotateAxis');
 const checkForShips = require('./utils/checkForShips');
 const isValidMove = require('./utils/isValidMove');
 
 const placeShipsInput = (board) => {
   const boardDOM = document.getElementById('place-ships');
+  const rotateBtn = document.querySelector('.rotate-btn');
+  rotateBtn.dataset.axis = 'X';
+
   const shipSize = [5, 4, 3, 3, 2];
   let currentShip = 0;
+
+  rotateBtn.addEventListener('click', rotateAxis);
+
   boardDOM.addEventListener('click', (e) => {
+    const axis = getAxis();
     const cell = e.target;
     const { x, y } = cell.dataset;
     const nX = Number(x);
@@ -18,12 +26,12 @@ const placeShipsInput = (board) => {
         nX,
         nY,
         shipSize[currentShip],
-        'X',
+        axis,
         board.getSize(),
         board.grid
       )
     ) {
-      board.placeShip(nX, nY, shipSize[currentShip], 'X');
+      board.placeShip(nX, nY, shipSize[currentShip], axis);
       currentShip += 1;
       renderBoard('place-ships', board);
 
