@@ -1,5 +1,6 @@
 :root {
-  --cell: 40px;
+  --cell: 60px;
+  --cell-color: rgb(185, 229, 255);
 }
 
 * {
@@ -80,7 +81,7 @@ button {
   height: fit-content;
   grid-template-columns: repeat(10, var(--cell));
   grid-template-rows: repeat(10, var(--cell));
-  background-color: rgb(185, 229, 255);
+  background-color: var(--cell-color);
   border: 4px solid black;
 }
 
@@ -90,6 +91,7 @@ button {
 }
 
 .cell {
+  background-color: var(--cell-color);
   outline: 1px solid black;
 }
 
@@ -106,9 +108,17 @@ button {
   background-color: grey;
 }
 
-.cell.missed {
+.cell.missed::after {
   background-color: red;
   border-radius: 50%;
+  width: 100%;
+  height: 100%;
+
+  content: '';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
 }
 
 .cell.hit {
