@@ -46,6 +46,26 @@ button {
   gap: 10px;
 }
 
+#game-over {
+  position: absolute;
+  top: 20%;
+  left: calc(50% - 200px);
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(230, 230, 230, 0.9);
+  border-radius: 10px;
+  font-size: 3rem;
+}
+
+.restart-btn {
+  width: 100px;
+}
+
 #game {
   flex-wrap: wrap;
   gap: 100px;

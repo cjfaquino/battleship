@@ -6,6 +6,7 @@ const createBoardDOM = require('./createBoardDOM');
 const renderEnemyBoard = require('./renderEnemyBoard');
 const { attackCpu, attackPlayer } = require('./attackDOM');
 const { placeShipsInput, placeCpuShips } = require('./placeShipsInput');
+const getWinner = require('./utils/getWinner');
 
 const game = (size = 10) => {
   // input ships
@@ -41,16 +42,16 @@ const game = (size = 10) => {
     cpuDOM.classList.remove('hide');
 
     // test
-    // for (let i = 0; i < 90; i++) {
-    //   const attackable = cpuBoard.getAttackable();
-    //   const randomIndex = Math.floor(Math.random() * attackable.length);
-    //   const randomCell = attackable[randomIndex];
-    //   const { x, y } = randomCell;
-    //   player.sendAttack(x, y, cpu);
-    //   cpu.sendAttack(player);
-    // }
-    // renderBoard('player', playerBoard);
-    // renderEnemyBoard(cpuBoard);
+    for (let i = 0; i < 90; i++) {
+      const attackable = cpuBoard.getAttackable();
+      const randomIndex = Math.floor(Math.random() * attackable.length);
+      const randomCell = attackable[randomIndex];
+      const { x, y } = randomCell;
+      player.sendAttack(x, y, cpu);
+      cpu.sendAttack(player);
+    }
+    renderBoard('player', playerBoard);
+    renderEnemyBoard(cpuBoard);
 
     document.dispatchEvent(new Event('playerTurn'));
   });
@@ -67,7 +68,16 @@ const game = (size = 10) => {
   });
 
   document.addEventListener('gameOver', () => {
-    console.log('game over');
+    const msg = document.getElementById('winning-message');
+    const gameOver = document.getElementById('game-over');
+    const restartBtn = document.querySelector('.restart-btn');
+
+    gameOver.classList.remove('hide');
+    msg.textContent = getWinner(player, cpu);
+
+    restartBtn.addEventListener('click', () => {
+      window.location.reload();
+    });
   });
 
   return { player, cpu, playerBoard, cpuBoard };
