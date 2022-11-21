@@ -19,12 +19,10 @@ const game = (size = 10) => {
   // initialize player
   const playerBoard = createBoard(size);
   const player = Player('p1', playerBoard);
-  playerDOM.classList.add('hide');
 
   // initialize cpu
   const cpuBoard = createBoard(size);
   const cpu = CPU(cpuBoard);
-  cpuDOM.classList.add('hide');
 
   renderBoard('place-ships', playerBoard);
   placeShipsInput(playerBoard);
@@ -32,14 +30,14 @@ const game = (size = 10) => {
   cpuDOM.addEventListener('click', attackCpu(player, cpu));
 
   document.addEventListener('finished placing', () => {
+    const startGame = document.getElementById('game');
     const menu = document.getElementById('input-menu');
     placeCpuShips(cpuBoard);
     renderBoard('player', playerBoard);
     renderEnemyBoard(cpuBoard);
 
     menu.classList.add('hide');
-    playerDOM.classList.remove('hide');
-    cpuDOM.classList.remove('hide');
+    startGame.classList.remove('hide');
 
     // test
     // for (let i = 0; i < 90; i++) {
