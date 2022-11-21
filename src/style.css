@@ -1,6 +1,8 @@
 :root {
-  --cell: 60px;
-  --cell-color: rgb(185, 229, 255);
+  --cell: 50px;
+  --cell-color: rgba(0, 0, 255, 0.542);
+  --neon-board-color: blue;
+  --placement-radius: 50px;
 }
 
 * {
@@ -16,12 +18,25 @@
 
 body {
   padding: 10px;
+  background-color: black;
 }
 
 header {
   display: flex;
   justify-content: center;
   padding-bottom: 50px;
+  color: white;
+}
+
+h1 {
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff,
+    0 0 20px var(--neon-board-color), 0 0 40px var(--neon-board-color),
+    0 0 90px var(--neon-board-color), 0 0 100px var(--neon-board-color),
+    0 0 120px var(--neon-board-color);
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  z-index: 1;
 }
 
 main,
@@ -32,19 +47,56 @@ main,
 }
 
 button {
+  cursor: pointer;
   width: 100%;
-  margin: 10px 0;
+  height: 40px;
   padding: 5px;
-  background-color: orange;
+  background-color: transparent;
+  border: 3px solid white;
+  box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
   outline: none;
-  border: none;
   border-radius: 3px;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
+button:disabled {
+  cursor: no-drop;
+  background: none !important;
+  color: rgb(164, 164, 164);
+  text-shadow: none;
+  box-shadow: none;
+  border: 3px solid rgb(164, 164, 164);
 }
 
 .btn-row {
   display: flex;
-  gap: 10px;
+}
+
+.rotate-btn {
+  border-top-left-radius: var(--placement-radius);
+  border-top-right-radius: var(--placement-radius);
+}
+
+.rotate-btn:hover {
+  background: linear-gradient(to bottom, #cc9900 50%, #ffffff 100%);
+}
+
+.confirm-placement {
+  border-bottom-right-radius: var(--placement-radius);
+}
+
+.confirm-placement:hover {
+  background: linear-gradient(to top, #00cc00 50%, #ffffff 100%);
+}
+
+.reset-placement {
+  border-bottom-left-radius: var(--placement-radius);
+}
+
+.reset-placement:hover {
+  background: linear-gradient(to top, #ff0000 50%, #ffffff 100%);
 }
 
 #game-over {
@@ -58,13 +110,23 @@ button {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: rgba(230, 230, 230, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   font-size: 3rem;
+  z-index: 10;
 }
 
 .restart-btn {
-  width: 100px;
+  padding: 10px;
+  height: 50px;
+  width: 200px;
+  background-color: black;
+  border-radius: 10px;
+}
+
+.restart-btn:hover {
+  color: yellow;
+  text-shadow: 0 0 5px yellow, 0 0 10px yellow;
 }
 
 #game {
@@ -82,21 +144,39 @@ button {
   grid-template-columns: repeat(10, var(--cell));
   grid-template-rows: repeat(10, var(--cell));
   background-color: var(--cell-color);
-  border: 4px solid black;
+  border: 2px solid white;
+  /* box-shadow: -0.2rem -0.2rem 1rem #fff, 0.2rem 0.2rem 1rem #fff, 0 0 2rem blue,
+    0 0 4rem blue, 0 0 6rem blue, 0 0 8rem blue, 0 0 10rem blue; */
+  box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff,
+    0 0 20px var(--neon-board-color), 0 0 40px var(--neon-board-color),
+    0 0 90px var(--neon-board-color), 0 0 100px var(--neon-board-color),
+    0 0 120px var(--neon-board-color);
 }
 
 .current-turn {
-  outline: 3px solid rgb(0, 0, 0) !important;
+  box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px white,
+    0 0 90px var(--neon-board-color), 0 0 100px var(--neon-board-color),
+    0 0 120px var(--neon-board-color) !important;
   transition: outline 100ms ease-in-out;
+}
+
+#cpu.current-turn {
+  cursor: crosshair;
+}
+
+#cpu.current-turn .cell:hover {
+  background-color: white;
 }
 
 .cell {
   background-color: var(--cell-color);
-  outline: 1px solid black;
+  border: 1px solid white;
+  box-shadow: 0 0 5px white, 0 0 10px white;
 }
 
 .cell.highlight {
   background-color: white;
+  box-shadow: 0 0 5px black, 0 0 10px black;
 }
 
 .cell.highlight.ship {
@@ -106,9 +186,12 @@ button {
 
 .cell.ship {
   background-color: grey;
+  box-shadow: 0 0 5px black, 0 0 10px black;
+  z-index: 1;
 }
 
 .cell.missed::after {
+  transform: scale(0.5);
   background-color: red;
   border-radius: 50%;
   width: 100%;
@@ -118,11 +201,27 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
 }
 
-.cell.hit {
+.cell.hit::after {
+  transform: scale(0.75);
+  box-sizing: border-box;
   background-color: black;
+
+  width: 100%;
+  height: 100%;
+
+  content: '';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+}
+
+#cpu.current-turn .cell.hit:hover,
+#cpu.current-turn .cell.missed:hover {
+  background-color: var(--cell-color) !important;
+  cursor: default;
 }
 
 .hit,
