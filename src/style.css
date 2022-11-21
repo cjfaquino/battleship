@@ -3,7 +3,7 @@
   --cell-color: rgba(0, 0, 255, 0.542);
   --ship-sunk-color: black;
   --neon-board-color: blue;
-  --placement-radius: 50px;
+  --placement-radius: 10px;
 }
 
 * {
