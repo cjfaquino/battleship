@@ -1,3 +1,5 @@
+const commonCellDOM = require('./commonCellDOM');
+
 const renderBoard = (player, board) => {
   const boardDOM = document.querySelectorAll(`#${player} .cell`);
   const { grid } = board;
@@ -10,13 +12,7 @@ const renderBoard = (player, board) => {
     if (cell.ship) cellDOM.classList.add('ship');
 
     // missed attack color
-    if (cell.missed === true) cellDOM.classList.add('missed');
-
-    // ship hit color
-    if (cell.missed === false) cellDOM.classList.add('hit');
-
-    // ship sunk color
-    if (cell.ship && cell.ship.isSunk()) cellDOM.classList.add('sunk');
+    commonCellDOM(cell, cellDOM);
 
     cellDOM.dataset.x = cell.x;
     cellDOM.dataset.y = cell.y;
