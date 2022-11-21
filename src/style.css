@@ -70,17 +70,25 @@ button:disabled {
   border: 3px solid rgb(164, 164, 164);
 }
 
-.btn-row {
+.btn-row,
+.top-btns {
   display: flex;
 }
 
 .rotate-btn {
   border-top-left-radius: var(--placement-radius);
-  border-top-right-radius: var(--placement-radius);
 }
 
 .rotate-btn:hover {
   background: linear-gradient(to bottom, #cc9900 50%, #ffffff 100%);
+}
+
+.randomize-btn {
+  border-top-right-radius: var(--placement-radius);
+}
+
+.randomize-btn:hover {
+  background: linear-gradient(to bottom, #9600cc 50%, #ffffff 100%);
 }
 
 .confirm-placement {

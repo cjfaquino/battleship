@@ -42,16 +42,16 @@ const game = (size = 10) => {
     cpuDOM.classList.remove('hide');
 
     // test
-    for (let i = 0; i < 90; i++) {
-      const attackable = cpuBoard.getAttackable();
-      const randomIndex = Math.floor(Math.random() * attackable.length);
-      const randomCell = attackable[randomIndex];
-      const { x, y } = randomCell;
-      player.sendAttack(x, y, cpu);
-      cpu.sendAttack(player);
-    }
-    renderBoard('player', playerBoard);
-    renderEnemyBoard(cpuBoard);
+    // for (let i = 0; i < 90; i++) {
+    //   const attackable = cpuBoard.getAttackable();
+    //   const randomIndex = Math.floor(Math.random() * attackable.length);
+    //   const randomCell = attackable[randomIndex];
+    //   const { x, y } = randomCell;
+    //   player.sendAttack(x, y, cpu);
+    //   cpu.sendAttack(player);
+    // }
+    // renderBoard('player', playerBoard);
+    // renderEnemyBoard(cpuBoard);
 
     document.dispatchEvent(new Event('playerTurn'));
   });

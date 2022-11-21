@@ -1,10 +1,25 @@
 const { rotateAxis } = require('./utils/rotateAxis');
 const resetPlacement = require('./utils/resetPlacement');
+const randomPlacement = require('./utils/randomPlacement');
+const renderBoard = require('./renderBoard');
 
 const rotateBtn = () => {
   const btn = document.querySelector('.rotate-btn');
   btn.dataset.axis = 'X';
   btn.addEventListener('click', rotateAxis);
+};
+
+const randomizeBtn = (board) => {
+  const btn = document.querySelector('.randomize-btn');
+
+  btn.addEventListener('click', () => {
+    resetPlacement(board);
+    randomPlacement(board);
+    renderBoard('place-ships', board);
+
+    const event = new Event('randomize');
+    document.dispatchEvent(event);
+  });
 };
 
 const resetBtn = (board) => {
@@ -33,6 +48,10 @@ const confirmBtn = (shipSize) => {
     index = 0;
   });
 
+  document.addEventListener('randomize', () => {
+    index = 5;
+  });
+
   btn.addEventListener('click', () => {
     if (index >= shipSize.length) {
       const event = new Event('finished placing');
@@ -41,4 +60,4 @@ const confirmBtn = (shipSize) => {
   });
 };
 
-module.exports = { rotateBtn, resetBtn, confirmBtn };
+module.exports = { rotateBtn, randomizeBtn, resetBtn, confirmBtn };

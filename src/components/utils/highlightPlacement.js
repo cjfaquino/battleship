@@ -13,6 +13,10 @@ const highlightPlacement = (shipSize) => {
     index = 0;
   });
 
+  document.addEventListener('randomize', () => {
+    index = 5;
+  });
+
   boardDOM.childNodes.forEach((cell) => {
     cell.addEventListener('mouseenter', () => {
       let { x, y } = cell.dataset;

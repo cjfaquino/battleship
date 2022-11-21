@@ -1,3 +1,4 @@
+const { resetBtn } = require('./placementBtnsDOM');
 const renderBoard = require('./renderBoard');
 const checkForShips = require('./utils/checkForShips');
 const { getAxis } = require('./utils/rotateAxis');
@@ -10,6 +11,11 @@ const placeShipDOM = (board, shipSize) => {
 
   document.addEventListener('reset board', () => {
     index = 0;
+  });
+
+  document.addEventListener('randomize', () => {
+    index = 5;
+    confirmBtn.disabled = false;
   });
 
   boardDOM.addEventListener('click', (e) => {
