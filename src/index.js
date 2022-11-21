@@ -1,5 +1,5 @@
 import './style.css';
 
-const game = require('./components/game');
+const { game } = require('./components/game');
 
 game();
