@@ -1,24 +1,12 @@
+const  getCurrentIndex  = require('./getCurrentIndex');
 const { getAxis } = require('./rotateAxis');
 
 const highlightPlacement = (shipSize) => {
   const boardDOM = document.getElementById('place-ships');
 
-  let index = 0;
-
-  document.addEventListener('ship placed', () => {
-    index += 1;
-  });
-
-  document.addEventListener('reset board', () => {
-    index = 0;
-  });
-
-  document.addEventListener('randomize', () => {
-    index = 5;
-  });
-
   boardDOM.childNodes.forEach((cell) => {
     cell.addEventListener('mouseenter', () => {
+      const index = getCurrentIndex();
       let { x, y } = cell.dataset;
       const nodes = [];
       nodes.push(cell);

@@ -1,24 +1,14 @@
-const { resetBtn } = require('./placementBtnsDOM');
 const renderBoard = require('./renderBoard');
 const checkForShips = require('./utils/checkForShips');
+const getCurrentIndex = require('./utils/getCurrentIndex');
 const { getAxis } = require('./utils/rotateAxis');
 
 const placeShipDOM = (board, shipSize) => {
   const boardDOM = document.getElementById('place-ships');
   const confirmBtn = document.querySelector('.confirm-placement');
 
-  let index = 0;
-
-  document.addEventListener('reset board', () => {
-    index = 0;
-  });
-
-  document.addEventListener('randomize', () => {
-    index = 5;
-    confirmBtn.disabled = false;
-  });
-
   boardDOM.addEventListener('click', (e) => {
+    const index = getCurrentIndex();
     const axis = getAxis();
     const cell = e.target;
     const { x, y } = cell.dataset;
@@ -30,7 +20,6 @@ const placeShipDOM = (board, shipSize) => {
       !checkForShips(nX, nY, shipSize[index], axis, board.getSize(), board.grid)
     ) {
       board.placeShip(nX, nY, shipSize[index], axis);
-      index += 1;
       renderBoard('place-ships', board);
     }
 

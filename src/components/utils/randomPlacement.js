@@ -29,6 +29,8 @@ const randomPlacement = (board) => {
     );
 
     board.placeShip(randomX, randomY, sLength, axis[randomAxis]);
+    const event = new Event('ship placed');
+    document.dispatchEvent(event);
   });
 };
 
