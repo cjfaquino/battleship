@@ -1,4 +1,4 @@
-const  getCurrentIndex  = require('./getCurrentIndex');
+const getCurrentIndex = require('./getCurrentIndex');
 const { getAxis } = require('./rotateAxis');
 
 const highlightPlacement = (shipSize) => {

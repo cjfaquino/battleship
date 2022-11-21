@@ -25,7 +25,6 @@ const game = (size = 10) => {
   const cpuBoard = createBoard(size);
   const cpu = CPU(cpuBoard);
   cpuDOM.classList.add('hide');
-  placeCpuShips(cpuBoard);
 
   renderBoard('place-ships', playerBoard);
   placeShipsInput(playerBoard);
@@ -34,6 +33,7 @@ const game = (size = 10) => {
 
   document.addEventListener('finished placing', () => {
     const menu = document.getElementById('input-menu');
+    placeCpuShips(cpuBoard);
     renderBoard('player', playerBoard);
     renderEnemyBoard(cpuBoard);
 
