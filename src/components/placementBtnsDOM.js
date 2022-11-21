@@ -9,8 +9,10 @@ const rotateBtn = () => {
 
 const resetBtn = (board) => {
   const btn = document.querySelector('.reset-placement');
+  const confirm = document.querySelector('.confirm-placement');
 
   btn.addEventListener('click', () => {
+    confirm.disabled = true;
     const event = new Event('reset board');
     document.dispatchEvent(event);
     resetPlacement(board);
