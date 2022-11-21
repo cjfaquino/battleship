@@ -1,6 +1,7 @@
 :root {
   --cell: 50px;
   --cell-color: rgba(0, 0, 255, 0.542);
+  --ship-sunk-color: black;
   --neon-board-color: blue;
   --placement-radius: 50px;
 }
@@ -212,7 +213,7 @@ button:disabled {
 }
 
 .cell.hit::after {
-  transform: scale(0.75);
+  transform: scale(0.6);
   box-sizing: border-box;
   background-color: black;
 
@@ -226,10 +227,21 @@ button:disabled {
   font-size: 4rem;
 }
 
+.cell.sunk {
+  background-color: var(--ship-sunk-color);
+  border: none;
+  box-shadow: none;
+  z-index: 1;
+}
+
 #cpu.current-turn .cell.hit:hover,
 #cpu.current-turn .cell.missed:hover {
   background-color: var(--cell-color) !important;
   cursor: default;
+}
+
+#cpu.current-turn .cell.sunk:hover {
+  background-color: var(--ship-sunk-color) !important;
 }
 
 .hit,

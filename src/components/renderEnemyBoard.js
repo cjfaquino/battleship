@@ -12,6 +12,9 @@ const renderEnemyBoard = (board) => {
     // ship hit color
     if (cell.missed === false) cellDOM.classList.add('hit');
 
+    // ship sunk color
+    if (cell.ship && cell.ship.isSunk()) cellDOM.classList.add('sunk');
+
     cellDOM.dataset.x = cell.x;
     cellDOM.dataset.y = cell.y;
   }
